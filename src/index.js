@@ -12,7 +12,7 @@ app.use(require('./routes/router'));
 // mongodb connection
 mongoose.connect( process.env.MONGODB_URI )
 .then(
-    () => console.log('Connected to MongoDb Atlas')
+    (data) => console.log('Connected to MongoDb Atlas', data)
 )
 .catch(
     (err) => {
