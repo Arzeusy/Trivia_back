@@ -1,0 +1,28 @@
+###
+POST http://localhost:9000/api/user http/1.1
+Content-Type: application/json
+
+{
+    "nickname":"Vertrack",
+    "email":"vertrack@hotmail.com"
+}
+
+
+###
+GET  http://localhost:9000/api/user http/1.1
+Content-Type: application/json
+
+
+###
+GET  http://localhost:9000/api/user/63252de30fc7e01259edcf7a http/1.1
+Content-Type: application/json
+
+
+###
+PUT  http://localhost:9000/api/user/63252de30fc7e01259edcf7a http/1.1
+Content-Type: application/json
+
+{
+    "nickname":"arzeusy",
+    "email":"arzeusy@hotmail.com"
+}

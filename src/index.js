@@ -1,25 +1,14 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 9000;
-const mongoose = require("mongoose");
+
+//init
 require("dotenv").config({path:"src/environment/.env"});
+require("./database");
 
 //routes 
-app.use(require('./routes/router'));
-
-
-
-// mongodb connection
-mongoose.connect( process.env.MONGODB_URI )
-.then(
-    (data) => console.log('Connected to MongoDb Atlas', data)
-)
-.catch(
-    (err) => {
-        console.error('error en coneccion a mongodb :' + err)
-    }
-);
-
+app.use(express.json());
+app.use('/api',require('./routes/router'));
 
 
 app.listen(port, () => {
