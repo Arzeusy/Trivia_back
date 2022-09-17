@@ -3,10 +3,10 @@ const app = express();
 const port = process.env.PORT || 9000;
 
 //init
-require("dotenv").config({path:"src/environment/.env"});
+require("dotenv").config({ path: "src/environment/.env" });
 require("./database");
 
-//routes 
+//routes
 app.use(express.json());
 app.use('/api',require('./routes/router'));
 

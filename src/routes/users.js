@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const userSchema = require('../models/user');
-
+const userController = require('../controllers/userController');
 
 router.get("/", (req, res) => {
     userSchema
@@ -42,63 +42,14 @@ router.put("/:id", (req, res) => {
 });
 
 
-router.post("/signup",  async (req, res) => {
-    const { nickname, email, password, confirmPassword } = req.body;
-    const errors = [];
-    if (password != confirmPassword) {
-        errors.push({passwordMatch: "Las contrasenas no coinciden"})
-    }
-    
-    if (password.length < 4 ) {
-        errors.push({passwordLength: "Las contrasenas no tiene la longitud minima"})
-    }
-
-    await userSchema
-        .find({$or:[{nickname: nickname},{email:email}]})
-        .then((data) => {
-             if (data.length) errors.push({email:"Correo actualmente en uso"})
-         })
-        .catch((error) => res.json({ message: error }));
-
-    if (errors.length > 0) {
-        res.json({DATA : errors})
-    } else {
-        const user = userSchema({nickname, email, password});
-        user.password = await user.encriptPassword(password);
-    
-        user.save().then(
-            (data) => res.json(data)
-        ).catch(
-            (error) => res.json({ message: error })
-        );
-    }
-});
+router.post("/signup", (req, res) => userController.signup(req, res));
 
 
-router.post("/signin", async (req, res) => {
-    const { email, password } = req.body;
+router.post("/signin", (req, res)=> userController.signin(req, res));
 
-    const user = await userSchema
-    .find({$or:[{email:email}]})
-    .then((data) => { return data; })
-    .catch((error) => res.json({ message: error }));
 
-    if (user) {
-        console.log("-------------------------------");
-        console.log(user);
-        const match = await user[0].matchPassword(password);
-        console.log(match);
-        if (match) {
-            res.json({message : "Bienbenido!"})
-        } else {
-            res.json({ message: "Error de autenticacion" });
-        }
+router.post("/logout", (req, res)=> userController.logout(req, res));
 
-    } else {
-        res.json({ message: "Error de autenticacion" });
-    }
-    
-});
 
 
 module.exports = router
