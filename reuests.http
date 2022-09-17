@@ -26,3 +26,24 @@ Content-Type: application/json
     "nickname":"arzeusy",
     "email":"arzeusy@hotmail.com"
 }
+
+
+###
+POST http://localhost:9000/api/user/signup http/1.1
+Content-Type: application/json
+
+{
+    "nickname":"paquiLord",
+    "email":"paqui@gmail.com",
+    "password":"12345",
+    "confirmPassword":"12345"
+}
+
+###
+POST http://localhost:9000/api/user/signin http/1.1
+Content-Type: application/json
+
+{
+    "email":"paqui@gmail.com",
+    "password":"1234"
+}
