@@ -25,7 +25,7 @@ router.get("/:id", (req, res) => {
     const { id } = req.params;
     userSchema
         .findById(id)
-        .then((data) => { res.json(data) })
+        .then((data) => { res.json({data:{nickname: data.nickname}}) })
         .catch((error) => res.json({ message: error }));
 
 });

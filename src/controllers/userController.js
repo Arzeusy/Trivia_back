@@ -44,8 +44,8 @@ const signin = async (req, res) => {
     if (user) {
         const match = await user[0].matchPassword(password);
         if (match) {
-            res.cookie("jwt", user[0]._id, { maxAge: 900000, httpOnly: true })
-            res.json({ message: "Bienbenido!" })
+            res.cookie("jwt", user[0]._id.valueOf(), { maxAge: 900000, httpOnly: true })
+            res.json({ message: "Bienbenido!", data: user[0]._id.valueOf() })
         } else {
             res.json({ message: "Error de autenticacion" });
         }
