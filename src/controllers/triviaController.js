@@ -22,17 +22,17 @@ const newQuestion = async (req, res) => {
 
     const Q = questionP.save().then((data) => data).catch((error) => res.json({ message: error }));
 
-    answers.forEach(element => {
+    answers.forEach( async (element) => {
        const ans = answerSchema({
             answer: element.answer,
             postedBy: Q._id,
             isCorrect: element.isCorrect
         }) 
         
-        ans.save().then((data) => data).catch((error) => res.json({ message: error }));
+       await ans.save().then((data) => data).catch((error) => res.json({ message: error }));
     });
     
-    
+    res.json({ message: 'ok' });
 };
 
 

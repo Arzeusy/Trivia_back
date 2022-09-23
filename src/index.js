@@ -5,7 +5,7 @@ const cors = require("cors");
 
 //cors
 const whitelist = [
-    "http://localhost:34481"
+    "http://localhost:4200"
 ];
 
 app.use(cors({origin: whitelist}));
