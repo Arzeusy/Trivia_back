@@ -49,5 +49,10 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/user/logout http/1.1
+GET http://localhost:3000/api/trivia/answers/632d560c87957b2f5d8081d3 http/1.1
+Content-Type: application/json
+
+
+###
+GET http://localhost:3000/api/trivia/onGame/1 http/1.1
 Content-Type: application/json

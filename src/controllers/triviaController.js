@@ -2,6 +2,11 @@ const userSchema = require('../models/user');
 const triviaSchema = require('../models/trivia');
 const answerSchema = require('../models/answer');
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 const newQuestion = async (req, res) => {
     const { episode, question, points, answers, id } = req.body.data;
     
@@ -20,8 +25,7 @@ const newQuestion = async (req, res) => {
         points
     })
 
-    const Q = questionP.save().then((data) => data).catch((error) => res.json({ message: error }));
-
+    const Q = await questionP.save().then((data) => data).catch((error) => res.json({ message: error }));
     answers.forEach( async (element) => {
        const ans = answerSchema({
             answer: element.answer,
@@ -35,10 +39,50 @@ const newQuestion = async (req, res) => {
     res.json({ message: 'ok' });
 };
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const onGame = async (req, res) => {
+    const { episode } = req.params;
 
+     triviaSchema
+        .find({ $or: [{ episode: episode }] })
+        .then((data) => { res.json({data:data}) })
+        .catch((error) => res.json({ message: error }));
+
+};
+
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getAnswers = async (req, res) => {
+    const { id } = req.params;
+
+    const quest = await triviaSchema
+        .findById(id)
+        .then((data) => {
+             return data
+         })
+        .catch((error) => res.json({ message: error }));
+    
+    let postedBy = quest._id;
+
+     answerSchema
+        .find({ $or: [{ postedBy: postedBy }] })
+        .then((data) => { res.json({data:data}) })
+        .catch((error) => res.json({ message: error }));
+
+};
 
 
 
 module.exports = {
     newQuestion,
+    onGame,
+    getAnswers
 }
