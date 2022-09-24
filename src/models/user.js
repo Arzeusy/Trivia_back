@@ -13,6 +13,10 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    points: {
+        type: Number,
+        default: 0
     }
     // date: {
     //     type: Date,

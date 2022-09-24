@@ -50,6 +50,7 @@ router.post("/signin", (req, res)=> userController.signin(req, res));
 
 router.post("/logout", (req, res)=> userController.logout(req, res));
 
+router.post("/rank", (req, res)=> userController.rankUsers(req, res));
 
 
 module.exports = router

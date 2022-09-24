@@ -45,14 +45,32 @@ const newQuestion = async (req, res) => {
  * @param {*} res 
  */
 const onGame = async (req, res) => {
-    const { episode } = req.params;
+    const { Episode } = req.body;
 
      triviaSchema
-        .find({ $or: [{ episode: episode }] })
+         .find({ $or: [{ episode: Episode }] })
         .then((data) => { res.json({data:data}) })
         .catch((error) => res.json({ message: error }));
+    
+    // let a = await triviaSchema.aggregate([
+    //     {
+    //         $match:{
+    //             episode: Episode
+    //         },
+    //         $lookup: {
+    //             from: 'answer',
+    //             localField: '_id',
+    //             foreignField: 'postedBy',
+    //             as: 'answers'
 
+    //         }
+    //     }
+    // ])
+    // console.l
+        // .then((data) => { res.json({ data: data }) })
+        // .catch((error) => res.json({ message: error }));
 };
+
 
 
 /**
@@ -79,10 +97,35 @@ const getAnswers = async (req, res) => {
 
 };
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const savePointsUser = async (req, res) => {
+    const { id } = req.params;
+    const { points } = req.body;
+
+    let user  = await userSchema
+        .findById(id)
+        .then((data) => { return data})
+        .catch((error) => res.json({ message: error }));
+    
+    const totalpoints = user.points + points;
+    console.log(totalpoints)
+
+    await userSchema
+        .updateOne({_id:id}, { $set: {points:totalpoints} })
+        .then((data) =>  data)
+        .catch((error) => res.json({ message: error }));
+    res.json({message: "Puntos guardados", data:true})
+};
+
 
 
 module.exports = {
     newQuestion,
     onGame,
-    getAnswers
+    getAnswers,
+    savePointsUser
 }

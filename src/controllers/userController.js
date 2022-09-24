@@ -62,8 +62,19 @@ const logout =  async (req, res) => {
     
 }
 
+const rankUsers =  async (req, res) => {
+  userSchema
+        .find().sort({points: -1 })
+        .then((data) => { res.json({data}) })
+        .catch((error) => res.json({ message: error }));
+
+}
+
+
+
 module.exports = {
     signup,
     signin,
-    logout
+    logout,
+    rankUsers
 }
