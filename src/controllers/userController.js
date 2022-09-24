@@ -26,7 +26,7 @@ const signup = async (req, res) => {
         user.password = await user.encriptPassword(password);
     
         user.save().then(
-            (data) => res.json(data)
+            (data) => res.json({data:data})
         ).catch(
             (error) => res.json({ message: error })
         );
