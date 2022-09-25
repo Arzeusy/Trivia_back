@@ -40,8 +40,8 @@ const signin = async (req, res) => {
         .find({ $or: [{ email: email }] })
         .then((data) => { return data; })
         .catch((error) => res.json({ message: error }));
-
-    if (user) {
+    
+    if (user.length ) {
         const match = await user[0].matchPassword(password);
         if (match) {
             res.cookie("jwt", user[0]._id.valueOf(), { maxAge: 900000, httpOnly: true })
