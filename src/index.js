@@ -10,7 +10,7 @@ const whitelist = [
     "https://trivia-front.herokuapp.com/"
 ];
 
-app.use(cors({origin: whitelist}));
+app.use(cors());
 
 //init
 require("dotenv").config({ path: "src/environment/.env" });
